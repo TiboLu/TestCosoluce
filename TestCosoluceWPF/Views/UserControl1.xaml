@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="TestCosoluceWPF.Views.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestCosoluceWPF.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450"
+             x:Name="uc" Width="774.825">
+    <UserControl.Resources>
+        <local:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="0,0,160,-0.4">
+        <Grid.Resources>
+            <local:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        </Grid.Resources>
+        <Label x:Name="lblSaisie" Content="Saisie du numéro" HorizontalAlignment="Left" Margin="45,132,0,0" VerticalAlignment="Top"/>
+        <GroupBox x:Name="gbTypeNumero" Header="Sélection du type de numéro" HorizontalAlignment="Left" Height="70" VerticalAlignment="Top" Width="281" BorderBrush="Black" Margin="45,32,0,0">
+            <StackPanel x:Name="pnlTypeNumero" HorizontalAlignment="Left" Height="56" Margin="10,10,0,0" VerticalAlignment="Top" Width="245">
+                <RadioButton x:Name="rdbSiren" Content="SIREN" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    IsChecked="{Binding MyNumeroType, ConverterParameter=siren, Converter={StaticResource EnumToBoolConverter}}"/>
+                <RadioButton x:Name="rdbSiret" Content="SIRET" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    IsChecked="{Binding MyNumeroType, ConverterParameter=siret, Converter={StaticResource EnumToBoolConverter}}"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="gbValidation" Header="Saisie du numéro et validation&#xD;&#xA;" HorizontalAlignment="Left" Height="101" VerticalAlignment="Top" Width="281" BorderBrush="Black" Margin="45,163,0,0">
+            <StackPanel x:Name="pnlValidation" HorizontalAlignment="Left" Margin="10,0,0,-24" Width="245">
+                <TextBox x:Name="txtSaisie" HorizontalAlignment="Left" Height="21" TextWrapping="Wrap" VerticalAlignment="Top" Width="215">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding CheckValidityCommand}" CommandParameter="{Binding Text, ElementName=txtSaisie}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button x:Name="btnValider" Content="Valider" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Command="{Binding CheckValidityCommand}" CommandParameter="{Binding Text, ElementName=txtSaisie}"/>
+            </StackPanel>
+        </GroupBox>
+        <ListView x:Name="lsvResultatValidation" HorizontalAlignment="Left" Height="232" Margin="368,32,0,0" VerticalAlignment="Top" Width="224" ItemsSource="{Binding ValidationResult}">
+
+        </ListView>
+
+    </Grid>
+</UserControl>
